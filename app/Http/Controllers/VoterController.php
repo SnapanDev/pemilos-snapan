@@ -19,10 +19,14 @@ class VoterController extends Controller
     {
         $canVote = Cache::remember('canVote', 5, fn () => Setting::where('attribute', 'vote')->first());
 
-        if ($canVote?->value === 'off') {
+        if ($canVote?->value !== 'on') {
+            if ($canVote?->value === 'off') {
+                return view('voter.cannot-vote');
+            } elseif ($canVote?->value === 'finish') {
+                return view('voter.vote-finish');
+            }
+
             return view('voter.cannot-vote');
-        } elseif ($canVote?->value === 'finish') {
-            return view('voter.vote-finish');
         }
 
         if (sizeof(auth()->user()->votes) === 2) {
