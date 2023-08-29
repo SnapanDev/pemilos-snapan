@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   @vite('resources/css/app.css')
+{{--  <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('build/assets/app.9c91aa94.css') }}">--}}
   <title>Selamat Datang - Login</title>
 </head>
 
