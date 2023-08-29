@@ -23,7 +23,7 @@ class UserController extends Controller
                 ->orWhere('class', 'LIKE', "%{$request->search}%");
         });
 
-        $users = $users->latest('id')->paginate(36);
+        $users = $users->orderBy('role_id')->latest('id')->paginate(36);
 
         $studentCount = User::where('role_id', User::STUDENT)->count();
         $nonStudentCount = User::whereIn('role_id', [User::TEACHER, User::STAFF])->count();
@@ -71,7 +71,7 @@ class UserController extends Controller
         switch ($credentials['role_id']) {
             case User::ADMIN:
                 $password = 'ADMIN' . $credentials['username'];
-                $credentials['password'] = bcrypt($password);
+                $credentials['password'] = Cr($password);
                 break;
             case User::STUDENT:
                 $password = 'MURID' . $credentials['username'];
@@ -92,8 +92,8 @@ class UserController extends Controller
         return redirect(route('admin.users.index'))
             ->with(
                 'success',
-                "Berhasil menambah user. <br> 
-                Username: {$credentials['username']} <br> 
+                "Berhasil menambah user. <br>
+                Username: {$credentials['username']} <br>
                 Password: {$password}"
             );
     }
@@ -151,8 +151,8 @@ class UserController extends Controller
         return redirect(route('admin.users.index'))
             ->with(
                 'success',
-                "Berhasil mengedit user. <br> 
-                Username: {$data['username']} <br> 
+                "Berhasil mengedit user. <br>
+                Username: {$data['username']} <br>
                 Password: {$password}"
             );
     }
