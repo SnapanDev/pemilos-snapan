@@ -23,7 +23,7 @@ class VoteController extends Controller
             });
         });
 
-        $users = $users->orderBy('class')->orderBy('name')->paginate(36);
+        $users = $users->orderBy('role_id', 'desc')->orderBy('class')->orderBy('name')->paginate(36);
 
         $votesCount = Vote::where('label', 'MPK')->count();
         $golputCount = User::doesntHave('votes')->whereNotIn('role_id', [User::SUPER_ADMIN, User::ADMIN])->count();
