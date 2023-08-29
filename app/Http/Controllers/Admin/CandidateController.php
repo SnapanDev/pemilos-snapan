@@ -12,7 +12,7 @@ class CandidateController extends Controller
 {
     public function index()
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
 
         $labels = Candidate::orderBy('number')->get()->groupBy('label');
 
@@ -21,14 +21,16 @@ class CandidateController extends Controller
 
     public function create()
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
 
         return view('admin.candidates.create');
     }
 
     public function store(Request $request)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
 
         $candidate = $request->validate([
             'name' => ['required', 'string'],
@@ -46,14 +48,17 @@ class CandidateController extends Controller
 
     public function edit(Request $request, Candidate $candidate)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
 
         return view('admin.candidates.edit', compact('candidate'));
     }
 
     public function update(Request $request, Candidate $candidate)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
 
         $data = $request->validate([
             'name' => ['required', 'string'],
@@ -78,7 +83,8 @@ class CandidateController extends Controller
 
     public function destroy(Candidate $candidate)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
 
         Storage::delete($candidate->image);
 
