@@ -28,8 +28,9 @@
   </h2>
 
   <div class="flex justify-center gap-4 rounded-lg py-3 my-4 bg-gray-800 text-gray-400">
-    <span class="text-sm font-bold">Jumlah Suara: {{ $votesCount }}</span>
-    <span class="text-sm font-bold">Jumlah Golput: {{ $golputCount }}</span>
+    <span class="text-sm font-bold">Jumlah Suara (Murid): {{ $votesStudents ?? 0 }}</span>
+    <span class="text-sm font-bold">Jumlah Suara (Staff): {{ $votesTeachers ?? 0 }}</span>
+    <span class="text-sm font-bold">Jumlah Suara (Guru): {{ $votesStaffs ?? 0 }}</span>
   </div>
 
   <div class="w-full overflow-hidden rounded-lg shadow-xs mb-8">
@@ -38,7 +39,7 @@
         <thead>
           <tr
             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-            <th class="px-4 py-3">Nama</th>
+            <th class="px-4 py-3">Id User</th>
             <th class="px-4 py-3">Username</th>
             <th class="px-4 py-3">Role</th>
             <th class="px-4 py-3">Vote</th>
@@ -50,8 +51,8 @@
               <td class="px-4 py-3">
                 <div class="flex items-center text-sm">
                   <div>
-                    <p class="font-semibold">{{ $user->name }}</p>
-                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ $user->class ?? '' }}</p>
+                    <p class="font-semibold">{{ $user->uuid }}</p>
+{{--                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ $user->class ?? '' }}</p>--}}
                   </div>
                 </div>
               </td>

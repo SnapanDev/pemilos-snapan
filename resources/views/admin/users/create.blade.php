@@ -6,7 +6,7 @@
 
 @section('content')
   <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-    Tambah User
+    Tambah User Manual
   </h2>
 
   <form x-data="{ isStudentRadio: {{ old('role_id' !== App\Models\User::STUDENT) ? 'false' : 'true' }} }" action="{{ route('admin.users.store') }}" method="POST"

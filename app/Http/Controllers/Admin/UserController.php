@@ -3,9 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use LogicException;
 
@@ -13,7 +23,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
         $users = User::query();
 
@@ -25,6 +35,8 @@ class UserController extends Controller
 
         $users = $users->orderBy('role_id')->latest('id')->paginate(36);
 
+        $users = new UserCollection($users);
+
         $studentCount = User::where('role_id', User::STUDENT)->count();
         $nonStudentCount = User::whereIn('role_id', [User::TEACHER, User::STAFF])->count();
 
@@ -33,7 +45,7 @@ class UserController extends Controller
 
     public function create()
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
         $roles = [
             User::STUDENT => 'Murid',
@@ -47,7 +59,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
         $roleMin = User::ADMIN;
         $roleMax = User::STAFF;
@@ -100,7 +112,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN || $user->role_id === User::SUPER_ADMIN, 404);
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN || $user->role_id === User::SUPER_ADMIN, 403);
 
         $roles = [
             User::STUDENT => 'Murid',
@@ -114,7 +126,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
         $roleMin = User::ADMIN;
         $roleMax = User::STAFF;
@@ -159,7 +171,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN || $user->role_id === User::SUPER_ADMIN, 404);
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN || $user->role_id === User::SUPER_ADMIN, 403);
 
         try {
             $user->delete();
@@ -168,5 +180,66 @@ class UserController extends Controller
         }
 
         return redirect(route('admin.users.index'))->with('success', 'Berhasil menghapus user.');
+    }
+
+    public function csv()
+    {
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
+
+        return view('admin.users.create-csv');
+    }
+
+    public function store_csv(Request $request): Application|RedirectResponse|Redirector|\Illuminate\Foundation\Application
+    {
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
+
+//        $request->validate([
+//            'csv-file' => ['required', 'mimes:csv']
+//        ]);
+
+        Storage::putFileAs('csv-file', $request->file('csv-file'), 'test.csv');
+
+        $csvFile = storage_path('app/public/csv-file/test.csv');
+
+        $read = fopen($csvFile, 'r');
+
+        while (!feof($read)) {
+            $data[] = fgetcsv($read, 1000, ',');
+        }
+
+        $data = new Collection($data);
+
+        fclose($read);
+        Storage::delete('app/public/csv-file/test.csv');
+
+        $data->shift();
+
+        try {
+            DB::beginTransaction();
+
+            $data->map(function ($item) {
+                User::query()->create([
+                    'name' => $item[0],
+                    'username' => $item[1],
+                    'role_id' => User::STUDENT,
+                    'password' => 'joko',
+                    'class' => $item[2]
+                ]);
+            });
+
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect(route('admin.users.index'))
+                ->withErrors([
+                    'errors' => 'Gagal menambahkan data'
+                ]);
+        }
+
+        return redirect(route('admin.users.index'))
+            ->with(
+                'success',
+                "Berhasil menambah user."
+            );
     }
 }

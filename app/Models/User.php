@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     const SUPER_ADMIN = 1;
     const ADMIN = 2;
     const STUDENT = 3;
@@ -43,7 +45,7 @@ class User extends Authenticatable
 
     public function votes()
     {
-        return $this->hasMany(Vote::class);
+        return $this->hasMany(Vote::class, 'user_id', 'id');
     }
 
     protected static function boot()

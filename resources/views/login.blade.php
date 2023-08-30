@@ -16,7 +16,7 @@
       <div class="w-full px-8 md:px-32 lg:px-24">
         <form class="bg-white rounded-md shadow-2xl p-5" method="post" action="{{ route('login') }}">
           @csrf
-          <h1 class="text-gray-800 font-bold text-2xl text-center mb-8">Pemilos 2022</h1>
+          <h1 class="text-gray-800 font-bold text-2xl text-center mb-8">Pemilos 2023</h1>
           @error('auth_failed')
             <div class="flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700" role="alert">
               <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
