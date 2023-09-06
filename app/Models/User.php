@@ -16,9 +16,19 @@ class User extends Authenticatable
 
     const SUPER_ADMIN = 1;
     const ADMIN = 2;
-    const STUDENT = 3;
-    const TEACHER = 4;
-    const STAFF = 5;
+    const TEACHER = 3;
+    const STAFF = 4;
+    const STUDENT = 5;
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+//        'password',
+        'remember_token',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -31,16 +41,7 @@ class User extends Authenticatable
         'role_id',
         'class',
         'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'password_token'
     ];
 
     public function votes()

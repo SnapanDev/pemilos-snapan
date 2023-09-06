@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCollection;
 use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -16,8 +18,12 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\In;
 use Illuminate\Validation\ValidationException;
 use LogicException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -33,7 +39,7 @@ class UserController extends Controller
                 ->orWhere('class', 'LIKE', "%{$request->search}%");
         });
 
-        $users = $users->orderBy('role_id')->latest('id')->paginate(36);
+        $users = $users->orderBy('role_id')->orderBy('class')->latest('id')->paginate(36);
 
         $users = new UserCollection($users);
 
@@ -62,7 +68,7 @@ class UserController extends Controller
         abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
         $roleMin = User::ADMIN;
-        $roleMax = User::STAFF;
+        $roleMax = User::STUDENT;
 
         $credentials = $request->validate([
             'name' => ['required', 'string'],
@@ -83,19 +89,15 @@ class UserController extends Controller
         switch ($credentials['role_id']) {
             case User::ADMIN:
                 $password = 'ADMIN' . $credentials['username'];
-                $credentials['password'] = Cr($password);
-                break;
-            case User::STUDENT:
-                $password = 'MURID' . $credentials['username'];
                 $credentials['password'] = bcrypt($password);
+                $credentials['password_token'] = base64_encode($password);
                 break;
             case User::TEACHER:
-                $password = 'GURU' . $credentials['username'];
-                $credentials['password'] = bcrypt($password);
-                break;
             case User::STAFF:
-                $password = 'STAFF' . $credentials['username'];
+            case User::STUDENT:
+                $password = Str::password(10, symbols: false);
                 $credentials['password'] = bcrypt($password);
+                $credentials['password_token'] = base64_encode($password);
                 break;
         }
 
@@ -193,10 +195,6 @@ class UserController extends Controller
     {
         abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
-//        $request->validate([
-//            'csv-file' => ['required', 'mimes:csv']
-//        ]);
-
         Storage::putFileAs('csv-file', $request->file('csv-file'), 'test.csv');
 
         $csvFile = storage_path('app/public/csv-file/test.csv');
@@ -222,7 +220,8 @@ class UserController extends Controller
                     'name' => $item[0],
                     'username' => $item[1],
                     'role_id' => User::STUDENT,
-                    'password' => 'joko',
+                    'password' => bcrypt('password'),
+                    'password_token' => base64_encode('password'),
                     'class' => $item[2]
                 ]);
             });
@@ -241,5 +240,54 @@ class UserController extends Controller
                 'success',
                 "Berhasil menambah user."
             );
+    }
+
+    public function export()
+    {
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
+
+        $classes = User::query()->where('role_id', User::STUDENT)
+            ->select('class')->groupBy('class')->get();
+
+        return view('admin.users.export', compact('classes'));
+    }
+
+    public function export_download(Request $request)
+    {
+        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
+
+        $roleMin = User::TEACHER;
+        $roleMax = User::STUDENT;
+
+        $data = $request->validate([
+            'role_id' => ['required', 'numeric', "min:{$roleMin}", "max:{$roleMax}"]
+        ]);
+
+        $classes = User::query()->where('role_id', User::STUDENT)
+            ->select('class')->groupBy('class')->get();
+
+        if ((int) $data['role_id'] === User::STUDENT) {
+            $class = $request->validate([
+                'class' => ['required', 'string',  Rule::in($classes->map(function ($item) {
+                    return $item->class;
+                }))]
+            ]);
+
+            $data['class'] = $class['class'];
+        }
+
+        $users = User::query()->where(function (Builder $query) use ($data) {
+            if ((int) $data['role_id'] === User::STUDENT) {
+                $query->where('class', $data['class']);
+            } else {
+                $query->whereIn('role_id', [User::TEACHER, User::STAFF]);
+            }
+        })->get();
+
+        if ((int) $data['role_id'] === User::STUDENT) {
+            return Excel::download(new UsersExport($users), $data['class']. '.xlsx');
+        }
+
+        return Excel::download(new UsersExport($users), 'Guru&Staff.xlsx');
     }
 }

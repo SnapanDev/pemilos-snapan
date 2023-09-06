@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +18,7 @@ class VoterController extends Controller
 
     public function vote()
     {
-        $canVote = Cache::remember('canVote', 5, fn () => Setting::where('attribute', 'vote')->first());
+        $canVote = Cache::remember('canVote', 5, fn() => Setting::where('attribute', 'vote')->first());
 
         if ($canVote?->value !== 'on') {
             if ($canVote?->value === 'off') {
@@ -47,11 +48,11 @@ class VoterController extends Controller
     {
         abort_if(
             in_array(auth()->user()->role_id, [User::ADMIN, User::SUPER_ADMIN])
-                || sizeof(auth()->user()->votes) === 2,
+            || sizeof(auth()->user()->votes) === 2,
             403
         );
 
-        $canVote = Cache::remember('canVote', 5, fn () => Setting::where('attribute', 'vote')->first());
+        $canVote = Cache::remember('canVote', 5, fn() => Setting::where('attribute', 'vote')->first());
 
         if ($canVote?->value !== 'on') {
             return redirect()->route('vote');

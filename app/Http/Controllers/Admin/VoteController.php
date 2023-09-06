@@ -15,7 +15,7 @@ class VoteController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         $users = User::with('votes')->whereNotIn('role_id', [User::SUPER_ADMIN, User::ADMIN]);
 
@@ -27,33 +27,17 @@ class VoteController extends Controller
             });
         });
 
-        $users = $users->orderBy('role_id', 'desc')
-            ->orderBy('class')
-            ->orderBy('name')->paginate(36);
+        $votes[] = Vote::all()->map(function ($item) {
+            return $item->user_id;
+        });
+
+        $users = $users->whereIn('id', $votes[0])->orderBy('role_id', 'desc')->orderBy('class')->paginate(36);
 
         $users = new UserCollection($users);
 
-        $votesStudents = DB::table('users')
-            ->select('users.role_id', 'votes.id')
-            ->join('votes', 'users.id', 'votes.user_id')
-            ->where('votes.label', 'OSIS')
-            ->where('users.role_id', User::STUDENT)
-            ->count('votes.id');
+        $notYetVoting =
+            User::query()->whereIn('role_id', [User::STAFF, User::TEACHER, User::STUDENT])->count() - Vote::query()->where('label', 'OSIS')->count();
 
-        $votesTeachers = DB::table('users')
-            ->select('users.role_id', 'votes.id')
-            ->join('votes', 'users.id', 'votes.user_id')
-            ->where('votes.label', 'OSIS')
-            ->where('users.role_id', User::TEACHER)
-            ->count('votes.id');
-
-        $votesStaffs = DB::table('users')
-            ->select('users.role_id', 'votes.id')
-            ->join('votes', 'users.id', 'votes.user_id')
-            ->where('votes.label', 'OSIS')
-            ->where('users.role_id', User::STAFF)
-            ->count('votes.id');
-
-        return view('admin.votes.index', compact('users', 'votesStudents', 'votesTeachers', 'votesStaffs'));
+        return view('admin.votes.index', compact('users', 'notYetVoting'));
     }
 }
