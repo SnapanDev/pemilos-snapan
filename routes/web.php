@@ -38,6 +38,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/users/create-csv', [UserController::class, 'csv'])->name('users.csv');
         Route::post('/users/create-csv', [UserController::class, 'store_csv'])->name('users.csv-store');
 
+        Route::name('users.export')->group(function () {
+            Route::get('/users/export', [UserController::class, 'export']);
+            Route::post('/users/export', [UserController::class, 'export_download']);
+        });
+
         Route::resource('/candidates', CandidateController::class)->except('show');
 
         Route::get('/votes', [VoteController::class, 'index'])

@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         $candidates = Candidate::query()
             ->select('name', 'label', 'number')

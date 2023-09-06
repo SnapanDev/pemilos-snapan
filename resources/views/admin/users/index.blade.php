@@ -28,13 +28,9 @@
       User
     </h2>
 
-    @error('errors')
-    <span class="text-xs text-red-600 dark:text-red-400">
-        {{ $message }}
-      </span>
-    @enderror
-
     <wrap class="flex items-center space-x-4">
+      <a href="{{ route('admin.users.export') }}"
+         class="h-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Ekspor (Excel)</a>
       <a href="{{ route('admin.users.csv') }}"
          class="h-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah
         (CSV)</a>
@@ -49,6 +45,11 @@
   </div>
 
   <div class="w-full overflow-hidden rounded-lg shadow-xs mb-8">
+    @error('errors')
+    <span class="text-lg py-8 text-red-600 dark:text-red-400">
+        {{ $message }}
+      </span>
+    @enderror
     @if (session()->has('success'))
       <div id="toast-success"
            class="flex items-center p-4 mb-4 w-full text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"

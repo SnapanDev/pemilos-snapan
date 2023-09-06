@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('role_id');
             $table->string('class')->nullable();
             $table->string('password');
+            $table->string('password_token')->nullable()->default(base64_encode('password'));
             $table->rememberToken();
             $table->timestamps();
         });

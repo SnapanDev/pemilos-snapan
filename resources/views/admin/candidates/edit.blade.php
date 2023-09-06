@@ -17,7 +17,7 @@
     <label for="name" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-400">Nama</label>
     <input
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
-      name="name" type="text" id="name" value="{{ old('name') ?? $candidate->name }}">
+      name="name" type="text" id="name" value="{{ old('name') ?? $candidate->name }}" readonly>
     @error('name')
       <span class="text-xs text-red-600 dark:text-red-400">
         {{ $message }}
@@ -30,12 +30,12 @@
       </span>
       <div class="mt-2">
         <label class="inline-flex items-center mx-3 text-gray-600 dark:text-gray-400">
-          <input type="radio" name="label" value="MPK"
+          <input type="radio" name="label" value="MPK" readonly
             @if (old('label') === 'MPK') {{ 'checked' }} @elseif($candidate->label === 'MPK') {{ 'checked' }} @endif />
           <span class="ml-2">MPK</span>
         </label>
         <label class="inline-flex items-center mx-3 text-gray-600 dark:text-gray-400">
-          <input type="radio" name="label" value="OSIS"
+          <input type="radio" name="label" value="OSIS" readonly
             @if (old('label') === 'OSIS') {{ 'checked' }} @elseif($candidate->label === 'OSIS') {{ 'checked' }} @endif />
           <span class="ml-2">OSIS</span>
         </label>

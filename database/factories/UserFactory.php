@@ -38,7 +38,8 @@ class UserFactory extends Factory
             'username' => fake()->userName(),
             'role_id' => $roles->random(),
             'password' => bcrypt('password'),
-            'remember_token' => Str::random(10),
+            'password_token' => base64_encode('password'),
+            'remember_token' => Str::random(10)
         ];
 
         if ($user['role_id'] === User::STUDENT) {

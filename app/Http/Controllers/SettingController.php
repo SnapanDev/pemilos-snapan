@@ -11,7 +11,9 @@ class SettingController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
+
 
         $settings = Setting::query();
 
@@ -27,14 +29,16 @@ class SettingController extends Controller
 
     public function create()
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         return view('admin.settings.create');
     }
 
     public function store(Request $request)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         $setting = $request->validate([
             'attribute' => ['required', 'string'],
@@ -51,14 +55,16 @@ class SettingController extends Controller
 
     public function edit(Setting $setting)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         return view('admin.settings.edit')->with(['setting' => $setting]);
     }
 
     public function update(Request $request, Setting $setting)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         $data = $request->validate([
             'attribute' => ['required', 'string'],
@@ -75,7 +81,8 @@ class SettingController extends Controller
 
     public function destroy(Setting $setting)
     {
-        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+//        abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 404);
+        abort_if(!in_array(auth()->user()->role_id, [User::SUPER_ADMIN, User::ADMIN]), 403);
 
         $setting->delete();
 

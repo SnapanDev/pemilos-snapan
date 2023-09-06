@@ -46,6 +46,7 @@ class RegisterSuperAdminCommand extends Command
             $credentials['confirm_password'] = $this->secret('Confirm password');
         }
 
+        $credentials['password_token'] = 'this is super-admin :D';
         $credentials['password'] = bcrypt($credentials['password']);
 
         return $credentials;
