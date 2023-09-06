@@ -16,37 +16,36 @@
     </div>
   @endif
   <!-- Section 1# -->
-  <main class="justify-center">
-    <div class="w-full mx-auto">
-      <img class="block h-72 sm:hidden mx-auto sm:mx-0" src="/img/Grafis_1_S.svg" alt="" />
+  <main class="justify-center z-[99] px-8">
+    <div class="w-full mx-auto min-h-screen justify-center items-center flex">
+      <img class="h-72 absolute -z-[99] opacity-[0.25] md:hidden mx-auto left-16 sm:mx-0" src="/img/maskot_pemilos_2023.png" alt="" />
 
       <div class="flex flex-wrap">
         <div class="flex-auto w-2/6 p-12">
           <img class="max-w-[300px]" src="/img/logo.png" alt="" srcset="" />
 
-          <div class="w-full mt-14 py-10">
+          <div class="w-full mt-16 space-y-8">
             <h1 class="text-[38px] leading-10 font-extrabold">
               Demokrasi Milenial IDOLA!
             </h1>
-            <p class="mt-4">
-              Ayo berkontribusi di pesta demokrasi ini. Pilihanmu menentukan
-              masa depan SMK Negeri 8 Semarang!
+            <p>
+           Ayo, jangan lewatkan kesempatan ini untuk berkontribusi. Pilihanmu adalah langkah awal menuju masa depan yang lebih baik untuk SMK Negeri 8 Semarang. Suara Anda memiliki dampak besar, dan bersama-sama kita dapat menciptakan perubahan yang berarti.
             </p>
             <button onclick="location.href='#introduction';"
-              class="block uppercase rounded-[28px] shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white text-base font-bold mt-14 py-4 px-12">
+              class="block uppercase rounded-[28px] shadow bg-blue-800 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white text-base font-bold py-4 px-12">
               Ayo Mulai!
             </button>
           </div>
         </div>
-        <div class="hidden md:flex flex-auto w-8/12">
-          <img class="ml-auto h-[85%]" src="/img/hero.svg" alt="" />
+        <div class="hidden md:flex flex-auto w-2/12">
+          <img class="ml-auto h-[85%]" src="/img/maskot_pemilos_2023.png" alt="" />
         </div>
       </div>
     </div>
   </main>
   <!-- End Section 1# -->
 
-  <section id="introduction" class="w-full max-w-5xl mx-auto">
+  <section id="introduction" class="w-full max-w-5xl mx-auto px-8 md:py-0">
     <div class="flex flew-wrap flex-col sm:flex-row">
       <div class="flex-auto w-full p-7 sm:w-3/4">
         <img src="/img/all_paslon.png" alt="" />
@@ -66,7 +65,7 @@
   </section>
 
   <img class="h-24 w-full mt-24" src="/img/grafis_1.png" alt="" />
-  <section class="w-full bg-[#f0f5ff] mb-0">
+  <section class="w-full bg-[#f0f5ff] mb-0 px-8 md:py-0">
     <div class="max-w-5xl mx-auto w-full p-4 sm:w-[1024px]">
       <h1 class="text-3xl text-[#3063af] font-bold sm:text-4xl">
         Calon Ketua OSIS
