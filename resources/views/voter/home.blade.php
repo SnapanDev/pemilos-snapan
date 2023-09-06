@@ -18,7 +18,7 @@
   <!-- Section 1# -->
   <main class="justify-center">
     <div class="w-full mx-auto">
-      <img class="block h-72 sm:hidden" src="/img/Grafis_1_S.svg" alt="" />
+      <img class="block h-72 sm:hidden mx-auto sm:mx-0" src="/img/Grafis_1_S.svg" alt="" />
 
       <div class="flex flex-wrap">
         <div class="flex-auto w-2/6 p-12">
