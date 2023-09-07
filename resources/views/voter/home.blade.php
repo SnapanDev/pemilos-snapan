@@ -104,7 +104,7 @@
                         </div>
                             <!-- List -->
                             <div id="#prokerCaketos1" class="flex flex-col w-full text-sm ">
-                                <p class="font-semibold text-[#3063af] my-4">Visi</p>
+                                <p class="font-semibold text-[#3063af] my-4">Program Kerja</p>
                                  <!-- Injected By Javascript -->
                             </div>
                     </div>
