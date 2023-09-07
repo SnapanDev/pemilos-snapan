@@ -26,10 +26,14 @@
                 <div class="flex-auto w-2/6 p-12">
                     <img class="max-w-[300px]" src="/img/logo.png" alt="" srcset="" />
 
-                    <div class="w-full mt-16 space-y-8">
+                    <div class="w-full mt-16 space-y-6">
                         <h1 class="text-[38px] leading-10 font-extrabold">
-                            Demokrasi Milenial IDOLA!
+                            SASTRA PRABU
                         </h1>
+                        <section class="flex flex-row h-full items-center">
+                            <div class="w-1 h-14 mr-4 bg-gray-300"></div>
+                        <p class="italic after:content-['”'] before:content-['“']">Saatnya Satu Suara Untuk Pemimpin Organisasi Intra Yang Baru</p>
+                        </section>
                         <p>
                             Ayo, jangan lewatkan kesempatan ini untuk berkontribusi. Pilihanmu adalah langkah awal
                             menuju masa depan yang lebih baik untuk SMK Negeri 8 Semarang. Suara Anda memiliki dampak
@@ -92,19 +96,19 @@
 
                     <div class="flex flex-wrap flex-col sm:flex-row">
                         <div class="flex-auto text-sm w-full ">
-                            <p class="font-semibold text-[#3063af] my-4">Visi</p>
+                            <p class="font-semibold text-[#3063af] my-4 ">Visi</p>
                             <p id="#visiCaketos1" class="text-justify">
                               <!-- Injected By Javascript -->
                             </p>
                         </div>
                         <!-- List -->
                         <div id="#misiCaketos1" class="flex flex-col w-full text-sm ">
-                            <p class="font-semibold text-[#3063af] my-4">Misi</p>
+                            <p class="font-semibold text-[#3063af] mt-4">Misi</p>
                             <!-- Injected By Javascript -->
                         </div>
                             <!-- List -->
                             <div id="#prokerCaketos1" class="flex flex-col w-full text-sm ">
-                                <p class="font-semibold text-[#3063af] my-4">Program Kerja</p>
+                                <p class="font-semibold text-[#3063af] mt-4">Program Kerja</p>
                                  <!-- Injected By Javascript -->
                             </div>
                     </div>
