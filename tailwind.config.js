@@ -3,7 +3,11 @@ module.exports = {
   darkMode: "class",
   content: ["./resources/**/*.blade.php", "./resources/**/*.js"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'foto': "url('/img/')"
+      }
+    },
   },
   plugins: [],
 };
