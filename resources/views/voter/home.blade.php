@@ -56,9 +56,9 @@
     <section id="introduction" class="w-full max-w-5xl px-8 mx-auto md:py-0">
         <div class="flex flex-col flew-wrap sm:flex-row">
             <div class="flex-auto w-full p-7 sm:w-3/4">
-                <!-- <img src="/img/Bersama non formal.webp" alt="" /> -->
-                <div class="h-48 bg-center bg-cover sm:h-80" style="background-image: url('{{ asset('img/Bersama non formal.webp') }}')"></div>
-                <!-- <div class="h-48 bg-center bg-cover sm:h-80 bg-[url({{ asset('public/img/Bersama formal.webo') }})]"></div> -->
+                <livewire:styles />
+                    <livewire:hover-candidates :imageSrc="'/img/Bersama formal.webp'" :imageChange="'/img/Bersama non formal.webp'">
+                <livewire:scripts />
             </div>
 
             <div class="self-center flex-auto p-4 sm:p-0">
@@ -75,11 +75,15 @@
         <div class="grid mt-8 sm:grid-cols-2 sm:gap-x-8">
             <section class="flex flex-col items-center p-5">
                 <h1 class="text-[30px] font-extrabold mb-4">MPK</h1>
-                <img src="/img/pemilos2023/MPK formal.webp" alt="">
+                <livewire:styles />
+                    <livewire:hover-candidates :imageSrc="'/img/pemilos2023/MPK formal.webp'" :imageChange="'/img/pemilos2023/OSIS formal.webp'">
+                <livewire:scripts />
             </section>
             <section class="flex flex-col items-center p-5">
                 <h1 class="text-[30px] font-extrabold mb-4">OSIS</h1>
-                <img src="/img/pemilos2023/OSIS formal .webp" alt="">
+                <livewire:styles />
+                    <livewire:hover-candidates :imageSrc="'/img/pemilos2023/OSIS non formal.webp'" :imageChange="'/img/pemilos2023/OSIS formal.webp'">
+                <livewire:scripts />
             </section>
         </div>
     </section>
@@ -98,13 +102,16 @@
             <div class="flex flex-col flex-wrap p-4 sm:flex-row gap-11">
                 <div class="flex-auto">
                     <!--  w-52 sm:w-[5%] -->
-                    <img src="img/pemilos2023/Paslon 01 OSIS formal.webp" class="h-auto max-w-full mx-auto w-52 sm:w-72" alt="Calon" />
+                    <livewire:styles />
+                        <livewire:hover-candidates :imageSrc="'/img/pemilos2023/Paslon 01 OSIS formal.webp'" :imageChange="'/img/pemilos2023/Paslon 01 OSIS non formal.webp'" :class="'h-auto max-w-full mx-auto w-52 sm:w-72'">
+                    <livewire:scripts />
                 </div>
                 <section class="flex-auto text-slate-800 w-full sm:w-[45%]">
                     <div class="mb-8 space-y-1">
                         <h1 class="text-sm font-semibold text-[#3063af] text-center sm:text-start">Caketos 1</h1>
                         <h2 class="text-3xl font-bold text-center sm:text-start">Maulida Nina Annastasya</h2>
-                        <h1 class="text-sm text-center sm:text-start">ANDA TEWAS KAMI PUAS</h1>
+                        <h1 class="text-sm text-center sm:text-start">Terdepan dalam aksi,
+Pilih nomor 1 untuk OSIS yang lebih berprestasi</h1>
                     </div>
 
                     <div class="flex flex-col flex-wrap sm:flex-row">
@@ -132,15 +139,17 @@
         <!-- Caketos 2 -->
         <div class="max-w-5xl my-1 mx-auto w-full sm:my-16 sm:w-[1024px]">
             <div class="flex flex-col flex-wrap p-4 sm:flex-row gap-11">
-                <div class="flex-auto order-first sm:order-last"  >
+                <div class="flex-auto order-first sm:order-last">
                     <!--  w-52 sm:w-[5%] -->
-                    <img src="img/pemilos2023/Paslon 02 OSIS formal.webp" class="h-auto max-w-full mx-auto rounded-lg w-52 sm:w-72" alt="Calon" />
+                    <livewire:styles />
+                        <livewire:hover-candidates :imageSrc="'/img/pemilos2023/Paslon 02 OSIS formal.webp'" :imageChange="'/img/pemilos2023/Paslon 02 OSIS non formal.webp'" :class="'h-auto max-w-full mx-auto w-52 sm:w-72'">
+                    <livewire:scripts />
                 </div>
                 <section class="flex-auto text-slate-800 w-full sm:w-[45%]">
                     <div class="mb-8 space-y-1">
                         <h1 class="text-sm font-semibold text-[#3063af] text-center sm:text-start">Caketos 2</h1>
                         <h2 class="text-3xl font-bold text-center sm:text-start">Muhammad Iman Nur Fallah</h2>
-                        <h1 class="text-sm text-center sm:text-start">MAJU BERSAMA DUA</h1>
+                        <h1 class="text-sm text-center sm:text-start">Belajar, Bergerak, Bermakna, bersama dua</h1>
                     </div>
 
                     <div class="flex flex-col flex-wrap sm:flex-row">
@@ -170,13 +179,15 @@
             <div class="flex flex-col flex-wrap p-4 sm:flex-row gap-11">
                 <div class="flex-auto">
                     <!--  w-52 sm:w-[5%] -->
-                    <img src="img/pemilos2023/Paslon 03 OSIS formal.webp"  class="h-auto max-w-full mx-auto rounded-lg w-52 sm:w-72" alt="Calon" />
+                    <livewire:styles />
+                        <livewire:hover-candidates :imageSrc="'/img/pemilos2023/Paslon 03 OSIS formal.webp'" :imageChange="'/img/pemilos2023/Paslon 03 OSIS non formal.webp'" :class="'h-auto max-w-full mx-auto w-52 sm:w-72'">
+                    <livewire:scripts />
                 </div>
                 <section class="flex-auto text-slate-800 w-full sm:w-[45%]">
                     <div class="mb-8 space-y-1">
                         <h1 class="text-sm font-semibold text-[#3063af] text-center sm:text-start">Caketos 3</h1>
                         <h2 class="text-3xl font-bold text-center sm:text-start">Reyhan Satria Putra S.</h2>
-                        <h1 class="text-sm text-center sm:text-start">MAJU BERSAMA DUA</h1>
+                        <h1 class="text-sm text-center sm:text-start">Suara Kita, Aksi Kita, Masa Depan Kita!</h1>
                     </div>
 
                     <div class="flex flex-col flex-wrap sm:flex-row">
@@ -220,13 +231,15 @@
             <div class="flex flex-col flex-wrap p-4 sm:flex-row gap-11">
                 <div class="flex-auto">
                     <!--  w-52 sm:w-[5%] -->
-                    <img src="img/pemilos2023/Paslon 01 MPK formal.webp" class="h-auto max-w-full mx-auto w-52 sm:w-72" alt="Calon" />
+                    <livewire:styles />
+                        <livewire:hover-candidates :imageSrc="'/img/pemilos2023/Paslon 01 MPK formal.webp'" :imageChange="'/img/pemilos2023/Paslon 01 MPK non formal.webp'" :class="'h-auto max-w-full mx-auto w-52 sm:w-72'">
+                    <livewire:scripts />
                 </div>
                 <section class="flex-auto text-slate-800 w-full sm:w-[45%]">
                     <div class="mb-8 space-y-1">
                         <h1 class="text-sm font-semibold text-[#3063af] text-center sm:text-start">Calon 1</h1>
                         <h2 class="text-3xl font-bold text-center sm:text-start">Alyca Zahrotul Musyitha</h2>
-                        <h1 class="text-sm text-center sm:text-start">ANDA TEWAS KAMI PUAS</h1>
+                        <h1 class="text-sm text-center sm:text-start">Membangun kerja sama yang sehat, jadikan MPK SNAPAN lebih kuat bersama nomor satu</h1>
                     </div>
 
                     <div class="flex flex-col flex-wrap sm:flex-row">
@@ -257,13 +270,15 @@
             <div class="flex flex-col flex-wrap p-4 sm:flex-row gap-11">
                 <div class="flex-auto sm:order-last">
                     <!--  w-52 sm:w-[5%] -->
-                    <img src="img/pemilos2023/Paslon 02 MPK formal.webp" class="h-auto max-w-full mx-auto w-52 sm:w-72" alt="Calon" />
+                    <livewire:styles />
+                        <livewire:hover-candidates :imageSrc="'/img/pemilos2023/Paslon 02 MPK formal.webp'" :imageChange="'/img/pemilos2023/Paslon 02 MPK non formal.webp'" :class="'h-auto max-w-full mx-auto w-52 sm:w-72'">
+                    <livewire:scripts />
                 </div>
                 <section class="flex-auto text-slate-800 w-full sm:w-[45%]">
                     <div class="mb-8 space-y-1">
                         <h1 class="text-sm font-semibold text-[#3063af] text-center sm:text-start">Calon 2</h1>
                         <h2 class="text-3xl font-bold text-center sm:text-start">Aqila Zahra Nur Hidayat</h2>
-                        <h1 class="text-sm text-center sm:text-start">ANDA TEWAS KAMI PUAS</h1>
+                        <h1 class="text-sm text-center sm:text-start">Maju Bersama Dua, Perkuat Integritas MPK Kita!</h1>
                     </div>
 
                     <div class="flex flex-col flex-wrap sm:flex-row">
@@ -294,13 +309,15 @@
             <div class="flex flex-col flex-wrap p-4 sm:flex-row gap-11">
                 <div class="flex-auto">
                     <!--  w-52 sm:w-[5%] -->
-                    <img src="img/pemilos2023/Paslon 03 MPK formal.webp" class="h-auto max-w-full mx-auto w-52 sm:w-72" alt="Calon" />
+                    <livewire:styles />
+                        <livewire:hover-candidates :imageSrc="'/img/pemilos2023/Paslon 03 MPK formal.webp'" :imageChange="'/img/pemilos2023/Paslon 03 MPK non formal.webp'" :class="'h-auto max-w-full mx-auto w-52 sm:w-72'">
+                    <livewire:scripts />
                 </div>
                 <section class="flex-auto text-slate-800 w-full sm:w-[45%]">
                     <div class="mb-8 space-y-1">
                         <h1 class="text-sm font-semibold text-[#3063af] text-center sm:text-start">Calon 3</h1>
                         <h2 class="text-3xl font-bold text-center sm:text-start">Yusuf Ricky H.</h2>
-                        <h1 class="text-sm text-center sm:text-start">ANDA TEWAS KAMI PUAS</h1>
+                        <h1 class="text-sm text-center sm:text-start">Kemajuan bersama, pilih nomer 3</h1>
                     </div>
 
                     <div class="flex flex-col flex-wrap sm:flex-row">
