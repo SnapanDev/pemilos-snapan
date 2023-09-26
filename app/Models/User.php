@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     public function votes()
     {
-        return $this->hasMany(Vote::class, 'user_uuid', 'uuid');
+        return $this->hasMany(Vote::class, 'user_id', 'id');
     }
 
     protected static function boot()
