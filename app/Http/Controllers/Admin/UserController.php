@@ -40,7 +40,7 @@ class UserController extends Controller
                 ->orWhere('class', 'LIKE', "%{$request->search}%");
         });
 
-        $users = $users->orderBy('role_id')->orderBy('class')->latest('id')->paginate(36);
+        $users = $users->orderBy('role_id', 'desc')->orderBy('class')->latest('id')->paginate(36);
 
         $users = new UserCollection($users);
 
@@ -216,9 +216,13 @@ class UserController extends Controller
         $password = Str::password(8);
 
         try {
+            Log::info(json_encode($data, JSON_PRETTY_PRINT));
             DB::beginTransaction();
 
             $data->map(function ($item) use ($password) {
+                if ($item === false) {
+                    return;
+                }
                 User::query()->create([
                     'name' => $item[0],
                     'username' => $item[1],
@@ -232,6 +236,7 @@ class UserController extends Controller
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
+            Log::info($exception->getMessage());
             return redirect(route('admin.users.index'))
                 ->withErrors([
                     'errors' => 'Gagal menambahkan data'
