@@ -1,7 +1,7 @@
 <div wire:poll.2s="setHover" class="{{ $class }}">
     @if ($hover)
-        <img src="{{ $imageSrc }}" alt="" />
-    @else 
-        <img src="{{ $imageChange }}" alt="" />
+        <img src="{{ asset($imageSrc) }}" alt="" />
+    @else
+        <img src="{{ asset($imageChange) }}" alt="" />
     @endif
 </div>

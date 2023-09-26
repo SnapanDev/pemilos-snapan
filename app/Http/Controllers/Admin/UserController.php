@@ -15,6 +15,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -212,16 +213,18 @@ class UserController extends Controller
 
         $data->shift();
 
+        $password = Str::password(8);
+
         try {
             DB::beginTransaction();
 
-            $data->map(function ($item) {
+            $data->map(function ($item) use ($password) {
                 User::query()->create([
                     'name' => $item[0],
                     'username' => $item[1],
                     'role_id' => User::STUDENT,
-                    'password' => bcrypt('password'),
-                    'password_token' => base64_encode('password'),
+                    'password' => bcrypt($password),
+                    'password_token' => base64_encode($password),
                     'class' => $item[2]
                 ]);
             });
