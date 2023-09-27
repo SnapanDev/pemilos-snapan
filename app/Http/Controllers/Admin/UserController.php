@@ -214,14 +214,13 @@ class UserController extends Controller
         $data->shift();
 
         try {
-            Log::info(json_encode($data, JSON_PRETTY_PRINT));
             DB::beginTransaction();
 
             $data->map(function ($item)  {
 
                 if ($item === false) return;
 
-                $password = Str::password(8);
+                $password = Str::password(10, symbols: false);
 
                 User::query()->create([
                     'name' => $item[0],
@@ -236,7 +235,6 @@ class UserController extends Controller
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::info($exception->getMessage());
             return redirect(route('admin.users.index'))
                 ->withErrors([
                     'errors' => 'Gagal menambahkan data'
@@ -300,5 +298,30 @@ class UserController extends Controller
         }
 
         return Excel::download(new UsersExport($users), 'Guru&Staff.xlsx');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        ini_set('max_execution_time', 1000);
+
+        try {
+            DB::beginTransaction();
+
+            $allUsers = User::query()->where('role_id', User::STUDENT)->get();
+
+            $allUsers->map(function ($user) {
+                $password = Str::password(10, symbols: false);
+                $user->password = bcrypt($password);
+                $user->password_token = base64_encode($password);
+                $user->save();
+            });
+
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect('/admin');
+        }
+
+        return redirect('/admin/users');
     }
 }

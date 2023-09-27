@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/users/create-csv', [UserController::class, 'csv'])->name('users.csv');
         Route::post('/users/create-csv', [UserController::class, 'store_csv'])->name('users.csv-store');
+        Route::get('/update-password', [UserController::class, 'updatePassword']);
 
         Route::name('users.export')->group(function () {
             Route::get('/users/export', [UserController::class, 'export']);
