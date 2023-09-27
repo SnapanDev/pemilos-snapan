@@ -21,27 +21,27 @@
 
 <body>
   @if (in_array(auth()->user()->role_id, [App\Models\User::ADMIN, App\Models\User::SUPER_ADMIN]))
-    <div class="px-8 py-4 flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center bg-gray-700 text-white">
+    <div class="flex flex-col items-center justify-between gap-4 px-8 py-4 text-white bg-gray-700 sm:flex-row sm:gap-0">
       <div class="flex flex-col text-center sm:text-left">
         <span>Anda adalah <strong>ADMIN</strong></span>
         <span>Anda tidak bisa melakukan vote</span>
       </div>
-      <a href="{{ route('admin.dashboard') }}" class="bg-blue-700 px-4 py-2 rounded-lg">Go to Dashboard &nbsp; &rarr;</a>
+      <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 bg-blue-700 rounded-lg">Go to Dashboard &nbsp; &rarr;</a>
     </div>
   @endif
-  <section class="p-14 text-white">
+  <section class="text-white p-14">
     <div class="flex-auto w-full">
-      <h1 class="text-4xl font-bold w-full my-7 sm:w-96">
+      <h1 class="w-full text-4xl font-bold my-7 sm:w-96">
         Silahkan pilih kandidat jagoan anda!
       </h1>
       <span class="w-96">Ingat kamu hanya dapat memilih satu kali! </span>
     </div>
   </section>
-  <img class="h-4 w-full sm:h-24" src="/img/grafis_1.png" alt="" />
+  <img class="w-full h-4 sm:h-24" src="/img/grafis_1.png" alt="" />
   <form class="max-w-full flex flex-col justify-center mx-auto bg-[#f0f5ff]" action="{{ route('submit') }}"
     method="POST">
     @if ($errors->any())
-      <div class="relative max-w-sm w-full mx-auto my-5 px-4 py-3 leading-normal text-red-700 bg-red-100 rounded-lg"
+      <div class="relative w-full max-w-sm px-4 py-3 mx-auto my-5 leading-normal text-red-700 bg-red-100 rounded-lg"
         role="alert">
         <ul class="ml-4 list-disc">
           @foreach ($errors->all() as $error)
@@ -57,17 +57,17 @@
         Kandidat {{ $label }}
       </h1>
 
-      <div class="flex flex-wrap flex-col gap-8 mx-6 mb-10 sm:flex-row sm:mx-auto">
+      <div class="flex flex-col flex-wrap gap-8 mb-10 mx-14 sm:flex-row sm:mx-auto">
         @foreach ($candidates as $candidate)
           <div class="flex-auto">
             <label>
-              <input type="radio" name="{{ strtolower($candidate->label) }}" class="vote-input hidden"
+              <input type="radio" name="{{ strtolower($candidate->label) }}" class="hidden vote-input"
                 value="{{ $candidate->id }}" />
               <div
-                class="vote-card flex flex-col items-center max-w-sm overflow-hidden rounded-xl bg-white shadow-xl duration-200 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
-                <div class="w-[300px] h-[300px] mx-6 mt-10">
+                class="flex flex-col items-center max-w-sm overflow-hidden duration-200 bg-white shadow-xl vote-card rounded-xl hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+                <div class="scale-75 sm:min-w-[300px] sm:min-h-[300px] mx-6 mt-10">
                   <img src="{{ asset('storage/' . $candidate->image) }}" alt="{{ $candidate->name }}"
-                    class="w-full h-full object-cover mx-auto" />
+                    class="object-cover w-full h-full mx-auto" />
                 </div>
                 <div class="p-5 text-center">
                   <p class="text-lg font-bold">{{ $candidate->name }}</p>
