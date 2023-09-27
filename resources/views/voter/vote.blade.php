@@ -81,7 +81,7 @@
     @endforeach
 
     <!-- Button -->
-    <button type="submit" onclick="return window.confirm('Apakah Anda yakin dengan pilihan ini?')"
+    <button type="submit" disabled onclick="return window.confirm('Apakah Anda yakin dengan pilihan ini?')"
       class="flex rounded-3xl px-8 py-4 my-10 w-[90%] mx-auto sm:w-[20%] bg-blue-800 hover:bg-blue-600 dark:text-white">
       <div class="flex items-center justify-between flex-1">
         <span class="text-lg font-medium text-white">Kirim</span>

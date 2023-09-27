@@ -17,7 +17,7 @@
   </div>
 @endif
 <!-- Section 1# -->
-<main class="justify-center z-[99] px-8">
+<main class="justify-center z-[99] px-8 scroll-smooth">
   <div class="flex items-center justify-center w-full min-h-screen mx-auto">
     <img class="h-72 absolute -z-[99] opacity-[0.25] md:hidden mx-auto left-16 sm:mx-0"
          src="/img/maskot_pemilos_2023.png" alt=""/>

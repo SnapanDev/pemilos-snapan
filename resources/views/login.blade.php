@@ -57,7 +57,7 @@
     </div>
   </div>
 
-    <div class="absolute flex flex-col items-center w-full mx-auto text-center bottom-32">Made With ❤️ By <img class="h-14" src="/img/snapandev.png" alt=""> </div>
+    <div class="absolute flex flex-col items-center w-full mx-auto text-center bottom-24 ">Made With ❤️ By <img class="h-14" src="/img/snapandev.png" alt=""> </div>
   </body>
 
 </html>
