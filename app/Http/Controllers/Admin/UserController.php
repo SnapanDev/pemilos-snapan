@@ -40,7 +40,7 @@ class UserController extends Controller
                 ->orWhere('class', 'LIKE', "%{$request->search}%");
         });
 
-        $users = $users->orderBy('role_id', 'desc')->orderBy('class')->latest('id')->paginate(36);
+        $users = $users->orderBy('role_id', 'desc')->orderBy('class')->orderBy('name')->paginate(36);
 
         $users = new UserCollection($users);
 
@@ -213,16 +213,16 @@ class UserController extends Controller
 
         $data->shift();
 
-        $password = Str::password(8);
-
         try {
             Log::info(json_encode($data, JSON_PRETTY_PRINT));
             DB::beginTransaction();
 
-            $data->map(function ($item) use ($password) {
-                if ($item === false) {
-                    return;
-                }
+            $data->map(function ($item)  {
+
+                if ($item === false) return;
+
+                $password = Str::password(8);
+
                 User::query()->create([
                     'name' => $item[0],
                     'username' => $item[1],
@@ -255,7 +255,10 @@ class UserController extends Controller
         abort_if(auth()->user()->role_id !== User::SUPER_ADMIN, 403);
 
         $classes = User::query()->where('role_id', User::STUDENT)
-            ->select('class')->groupBy('class')->get();
+            ->select('class')
+            ->groupBy('class')
+            ->orderBy('class')
+            ->get();
 
         return view('admin.users.export', compact('classes'));
     }

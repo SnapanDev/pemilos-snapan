@@ -71,6 +71,7 @@
                 </div>
                 <div class="p-5 text-center">
                   <p class="text-lg font-bold">{{ $candidate->name }}</p>
+                  <p class="text-lg font-bold">{{ $candidate->number }}</p>
                 </div>
               </div>
             </label>

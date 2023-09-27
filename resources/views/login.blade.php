@@ -35,7 +35,7 @@
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                 d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
             </svg>
-            <input id="username" class=" pl-2 w-full outline-none border-none" type="text" name="username"
+            <input autocomplete="off" id="username" class=" pl-2 w-full outline-none border-none" type="text" name="username"
               placeholder="Username" value="{{ old('username') }}" />
           </div>
           <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl ">
