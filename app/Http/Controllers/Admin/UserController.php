@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\GuruStaffExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCollection;
@@ -38,6 +39,10 @@ class UserController extends Controller
             $query->where('name', 'LIKE', "%{$request->search}%")
                 ->orWhere('username', 'LIKE', "%{$request->search}%")
                 ->orWhere('class', 'LIKE', "%{$request->search}%");
+        });
+
+        $users->when(!empty($request->role), function (Builder $query) use ($request) {
+            $query->where('role_id', $request->role);
         });
 
         $users = $users->orderBy('role_id', 'desc')->orderBy('class')->orderBy('name')->paginate(36);
@@ -149,13 +154,17 @@ class UserController extends Controller
             $data['class'] = $class['class'];
         }
 
-        $password = match ((int) $data['role_id']) {
-            User::ADMIN => 'ADMIN' . $data['username'],
-            User::STUDENT => 'MURID' . $data['username'],
-            User::TEACHER => 'GURU' . $data['username'],
-            User::STAFF => 'STAFF' . $data['username']
-        };
+
+//        $password = match ((int) $data['role_id']) {
+//            User::ADMIN => 'ADMIN' . $data['username'],
+//            User::STUDENT => 'MURID' . $data['username'],
+//            User::TEACHER => 'GURU' . $data['username'],
+//            User::STAFF => 'STAFF' . $data['username']
+//        };
+
+        $password = Str::password(10, symbols: false);
         $data['password'] = bcrypt($password);
+        $data['password_token'] = base64_encode($password);
 
         try {
             $user->update($data);
@@ -297,7 +306,9 @@ class UserController extends Controller
             return Excel::download(new UsersExport($users), $data['class']. '.xlsx');
         }
 
-        return Excel::download(new UsersExport($users), 'Guru&Staff.xlsx');
+        Log::info($users);
+
+        return Excel::download(new GuruStaffExport($users), 'Guru&Staff.xlsx');
     }
 
     public function updatePassword(Request $request)
